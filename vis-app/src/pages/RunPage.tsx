@@ -379,21 +379,6 @@ export const RunPage: React.FC = () => {
         {/* ── RIGHT: Inspection sidebar ──────────────────────────────────── */}
         <aside className="w-72 shrink-0 border-l border-border bg-surface flex flex-col overflow-hidden">
 
-          {/* Active Recipe section */}
-          <div className="px-3 py-2 border-b border-border bg-neutral-50 shrink-0">
-            <h2 className="text-2xs font-bold text-neutral-500 uppercase tracking-widest">
-              Active Recipe
-              {hasDeployment && (
-                <span className="ml-1.5 text-success-600">({deployment!.measurements.length} measurement{deployment!.measurements.length !== 1 ? 's' : ''})</span>
-              )}
-            </h2>
-            {hasDeployment && (
-              <p className="text-2xs text-neutral-400 mt-0.5 font-mono">
-                Deployed {new Date(deployment!.deployedAt).toLocaleTimeString('en-GB', { hour12: false })}
-              </p>
-            )}
-          </div>
-
           <div className="flex-1 overflow-y-auto">
 
             {/* ── No deployment ─────────────────────────────────────────── */}
@@ -405,66 +390,6 @@ export const RunPage: React.FC = () => {
                     No inspection configuration deployed. Go to Configure, build a recipe, and click Save &amp; Deploy.
                   </p>
                 </div>
-              </div>
-            )}
-
-            {/* ── Recipe cards ──────────────────────────────────────────── */}
-            {hasDeployment && (
-              <div className="p-2 space-y-1.5">
-                {deployment!.measurements.map((m, i) => {
-                  // Find the live result for this measurement
-                  const liveResult = currentResult?.measuredValues.find(
-                    (mv) => mv.parameter === m.tool,
-                  );
-                  const spec = m.engineeringSpecification;
-
-                  return (
-                    <div key={m.id} className="rounded border border-neutral-200 bg-white overflow-hidden">
-                      {/* Card header */}
-                      <div className={cn(
-                        'flex items-center justify-between px-2.5 py-1.5 border-b border-neutral-200',
-                        liveResult
-                          ? liveResult.result === 'pass' ? 'bg-success-50' : 'bg-danger-50'
-                          : 'bg-neutral-50',
-                      )}>
-                        <div className="flex items-center gap-1.5">
-                          <span className="text-2xs font-bold text-neutral-400">#{i + 1}</span>
-                          <span className="text-xs font-semibold text-neutral-800">{m.tool}</span>
-                        </div>
-                        {liveResult && (
-                          <span className={cn(
-                            'text-2xs font-bold px-1.5 py-0.5 rounded uppercase tracking-wide',
-                            liveResult.result === 'pass'
-                              ? 'bg-success-100 text-success-700'
-                              : 'bg-danger-100 text-danger-700',
-                          )}>
-                            {liveResult.result}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Measurement info */}
-                      <div className="px-2.5 py-2 space-y-1">
-                        {liveResult ? (
-                          <SidebarRow
-                            label="Measured"
-                            value={`${liveResult.measuredValue.toFixed(3)} ${spec.units}`}
-                            bold
-                            color={liveResult.result === 'pass' ? 'success' : 'danger'}
-                          />
-                        ) : (
-                          <SidebarRow label="Ref Value" value={`${m.measuredValue.toFixed(3)} ${spec.units}`} bold />
-                        )}
-                        <SidebarRow label="Ideal"     value={`${spec.idealValue} ${spec.units}`} />
-                        <SidebarRow label="Tolerance" value={`±${spec.tolerance} ${spec.units}`} />
-                        <SidebarRow
-                          label="PASS Range"
-                          value={`${spec.minimumAcceptable.toFixed(3)} → ${spec.maximumAcceptable.toFixed(3)} ${spec.units}`}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
               </div>
             )}
 
