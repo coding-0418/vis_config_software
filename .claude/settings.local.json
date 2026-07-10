@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//home/dan/Downloads/**)",
+      "Bash(unzip -o wireframes@2x.zip -d wireframes_extracted)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run:*)",
+      "Bash(ls /home/dan/vis_config_software/vis-app/.env*)",
+      "Bash(ls /home/dan/vis_config_software/vis-app/*.d.ts)"
+    ]
+  }
+}

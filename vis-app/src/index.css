@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Reset & Base ─────────────────────────────────────────────────────────── */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body, #root {
+    height: 100%;
+    overflow: hidden;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #f1f5f9;
+    color: #1e293b;
+  }
+
+  /* Prevent text selection in UI chrome */
+  button, [role="button"] {
+    user-select: none;
+  }
+
+  /* Scrollbar styling for industrial look */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f5f9;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  /* Range input (slider) global styles */
+  input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 3px;
+    outline: none;
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #2563eb;
+    border: 2px solid white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+  input[type="range"].accent-red-500::-webkit-slider-thumb   { background: #ef4444; }
+  input[type="range"].accent-green-500::-webkit-slider-thumb { background: #22c55e; }
+  input[type="range"].accent-blue-500::-webkit-slider-thumb  { background: #3b82f6; }
+}
+
+/* ── Component Utilities ──────────────────────────────────────────────────── */
+@layer components {
+  /* Toolbar base */
+  .toolbar {
+    @apply h-10 bg-neutral-800 border-b border-neutral-900 flex items-center px-4 gap-3 shrink-0;
+  }
+
+  /* Panel section header */
+  .panel-header {
+    @apply px-3 py-2 border-b border-border bg-neutral-50 shrink-0;
+  }
+
+  .panel-header h2 {
+    @apply text-2xs font-bold text-neutral-500 uppercase tracking-widest;
+  }
+
+  /* Industrial status light */
+  .status-light {
+    @apply inline-block w-2 h-2 rounded-full;
+  }
+  .status-light.live    { @apply bg-success-500 shadow-[0_0_6px_rgba(34,197,94,0.6)]; }
+  .status-light.offline { @apply bg-neutral-400; }
+  .status-light.error   { @apply bg-danger-500 shadow-[0_0_6px_rgba(239,68,68,0.6)]; }
+
+  /* Data table base */
+  .data-table {
+    @apply w-full text-xs border-collapse;
+  }
+  .data-table th {
+    @apply px-2.5 py-1.5 text-left text-2xs font-bold text-neutral-500 uppercase tracking-wide
+           bg-neutral-50 border-b border-border whitespace-nowrap;
+  }
+  .data-table td {
+    @apply px-2.5 py-1.5 border-b border-border last:border-0;
+  }
+  .data-table tbody tr:hover {
+    @apply bg-primary-50/40;
+  }
+
+  /* Sidebar item */
+  .sidebar-item {
+    @apply w-full flex items-center gap-2 px-3 py-1.5 text-left text-xs font-medium
+           text-neutral-700 hover:bg-primary-50 hover:text-primary-700 transition-colors;
+  }
+  .sidebar-item.active {
+    @apply bg-primary-50 text-primary-700 border-r-2 border-primary-500;
+  }
+}
+
+/* ── Utility overrides ────────────────────────────────────────────────────── */
+@layer utilities {
+  .border-3 {
+    border-width: 3px;
+  }
+  
+  /* Prevent layout shift from scrollbar */
+  .scrollbar-stable {
+    scrollbar-gutter: stable;
+  }
+
+  /* Font mono numeric (for coordinates / values) */
+  .tabular-nums {
+    font-variant-numeric: tabular-nums;
+  }
+}
